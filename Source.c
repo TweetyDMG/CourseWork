@@ -25,8 +25,6 @@ typedef struct
 int rods_ladder_output(lader *objectsLader, int *numLader, double *result_rods, int *numResult_rods);
 int mesh_ladder_output(mesh *objectsMesh, lader *objectsLader, int *numMesh, int *numLader, int *result_mesh, int *numResult_mesh);
 int save_to_file(char* filename, lader *objectsLader, int numLader, mesh *objectsMesh, int numMesh, double *result_rods, int numResultRods, int *result_mesh, int numResultMesh);
-int load_from_file(char* filename);
-
 
 double rods_ladder_calc(const lader *objectsLader, int numLader);
 int mesh_ladder_calc(const mesh *objectsMesh, const lader *objectsLader, int numLader, int numMesh);
@@ -237,6 +235,9 @@ int main()
                 }
                 break;
 
+            case '0':
+                break;
+
             default:
                 printf("Вы нажали не ту клавишу. Попробуйте ещё раз\n");
                 break;}
@@ -259,7 +260,7 @@ int rods_ladder_output(lader *objectsLader, int *numLader, double *result_rods, 
         double result;
          do {
         printf("\nВведите высоту ограждения от поверхности ступеньки (в метрах): ");
-        if (scanf("%lf", &objectsLader[*numLader].fenceLength) != 1 || objectsLader[*numLader].fenceLength == 0) {
+        if (scanf("%lf", &objectsLader[*numLader].fenceLength) != 1 || objectsLader[*numLader].fenceLength <= 0) {
             printf("Ошибка ввода. Введите корректное значение\n\n");
             while (getchar() != '\n'); //очистка буфера для корректного ввода следующих данных
             continue;
@@ -268,7 +269,7 @@ int rods_ladder_output(lader *objectsLader, int *numLader, double *result_rods, 
 
 
         printf("\nВведите высоту ступеньки: ");
-        if (scanf("%lf", &objectsLader[*numLader].stepHeight) != 1 || objectsLader[*numLader].stepHeight == 0) {
+        if (scanf("%lf", &objectsLader[*numLader].stepHeight) != 1 || objectsLader[*numLader].stepHeight <= 0) {
             printf("Ошибка ввода. Введите корректное значение\n");
             while (getchar() != '\n');
             continue;
@@ -277,7 +278,7 @@ int rods_ladder_output(lader *objectsLader, int *numLader, double *result_rods, 
 
 
         printf("\nВведите ширину ступеньки (в метрах): ");
-        if (scanf("%lf", &objectsLader[*numLader].stepWidth) != 1 || objectsLader[*numLader].stepWidth == 0) {
+        if (scanf("%lf", &objectsLader[*numLader].stepWidth) != 1 || objectsLader[*numLader].stepWidth <= 0) {
             printf("Ошибка ввода. Введите корректное значение\n");
             while (getchar() != '\n');
             continue;
@@ -294,7 +295,7 @@ int rods_ladder_output(lader *objectsLader, int *numLader, double *result_rods, 
         printf("-------------------------");
 
         printf("\nВведите расстояние между прутьями: ");
-        if (scanf("%lf", &objectsLader[*numLader].dist_rods) != 1 || objectsLader[*numLader].dist_rods == 0) {
+        if (scanf("%lf", &objectsLader[*numLader].dist_rods) != 1 || objectsLader[*numLader].dist_rods <= 0) {
             printf("Ошибка ввода. Введите корректное значение\n");
             while (getchar() != '\n');
             continue;
@@ -361,14 +362,14 @@ int mesh_ladder_output(mesh *objectsMesh, lader *objectsLader, int *numMesh, int
        
         do {
         printf("\nВведите длину сетки в одном рулоне (в метрах): ");
-        if (scanf("%lf", &objectsMesh[*numMesh].meshLength) != 1 || objectsMesh[*numMesh].meshLength == 0) {
+        if (scanf("%lf", &objectsMesh[*numMesh].meshLength) != 1 || objectsMesh[*numMesh].meshLength <= 0) {
             printf("Ошибка ввода. Введите корректное значение\n\n");
             while (getchar() != '\n');
             continue;
         }
         printf("-------------------------");
         printf("\nВведите ширину сетки в рулоне (в метрах): ");
-        if (scanf("%lf", &objectsMesh[*numMesh].meshWidth) != 1 || objectsMesh[*numMesh].meshWidth == 0) {
+        if (scanf("%lf", &objectsMesh[*numMesh].meshWidth) != 1 || objectsMesh[*numMesh].meshWidth <= 0) {
             printf("Ошибка ввода. Введите корректное значение\n\n");
             while (getchar() != '\n');
             continue;
@@ -376,7 +377,7 @@ int mesh_ladder_output(mesh *objectsMesh, lader *objectsLader, int *numMesh, int
         printf("-------------------------");
         
         printf("\nВведите высоту ограждения от поверхности ступеньки (в метрах): ");
-        if (scanf("%lf", &objectsLader[*numLader].fenceLength) != 1 || objectsLader[*numLader].fenceLength == 0) {
+        if (scanf("%lf", &objectsLader[*numLader].fenceLength) != 1 || objectsLader[*numLader].fenceLength <= 0) {
             printf("Ошибка ввода. Введите корректное значение\n\n");
             while (getchar() != '\n');
             continue;
@@ -384,7 +385,7 @@ int mesh_ladder_output(mesh *objectsMesh, lader *objectsLader, int *numMesh, int
         printf("-------------------------");
 
         printf("\nВведите высоту ступеньки (в метрах): ");
-        if (scanf("%lf", &objectsLader[*numLader].stepHeight) != 1 || objectsLader[*numLader].stepHeight == 0) {
+        if (scanf("%lf", &objectsLader[*numLader].stepHeight) != 1 || objectsLader[*numLader].stepHeight <= 0) {
             printf("Ошибка ввода. Введите корректное значение\n\n");
             while (getchar() != '\n');
             continue;
@@ -392,7 +393,7 @@ int mesh_ladder_output(mesh *objectsMesh, lader *objectsLader, int *numMesh, int
         printf("-------------------------");
 
         printf("\nВведите ширину ступеньки (в метрах): ");
-        if (scanf("%lf", &objectsLader[*numLader].stepWidth) != 1 || objectsLader[*numLader].stepWidth == 0) {
+        if (scanf("%lf", &objectsLader[*numLader].stepWidth) != 1 || objectsLader[*numLader].stepWidth <= 0) {
             printf("Ошибка ввода. Введите корректное значение\n\n");
             while (getchar() != '\n');
             continue;
@@ -440,7 +441,7 @@ int mesh_ladder_output(mesh *objectsMesh, lader *objectsLader, int *numMesh, int
         return 0;
         }
 
-        if (mesh_ladder_calc(objectsMesh, objectsLader, *numLader, *numMesh) == 1)
+        if (mesh_ladder_calc(objectsMesh, objectsLader, *numLader, *numMesh) == -1)
         {
             printf("Произошла ошибка 1. Проверьте данные и повторите ввод");
             objectsMesh[*numMesh].meshLength = 0.0;
@@ -474,11 +475,11 @@ double rods_ladder_calc(const lader *objectsLader, int numLader)
 
     double frac1_1, frac1, result_sqrt, frac3, result;
 
-    frac1_1 = step_width * step_width + 2*step_width * fence_length + step_width;
-    frac1 = frac1_1 / (2*dist_rods);
-    frac3 = dist_rods*dist_rods*(step_amount*step_amount+step_width*step_width);
-    result_sqrt = sqrt((frac3/(step_width*step_width)))-dist_rods*dist_rods;
-    result = frac1 * result_sqrt*step_amount;
+    frac1_1 = (step_width * step_width) + (2*step_width * fence_length) + step_width;
+    frac1 = frac1_1 / (dist_rods+dist_rods);
+    frac3 = (dist_rods*dist_rods)*((step_amount*step_amount)+(step_width*step_width));
+    result_sqrt = sqrt((frac3/(step_width*step_width))-(dist_rods*dist_rods));
+    result = frac1*result_sqrt*step_amount;
     if (result > 0) return result;
     else return 1;
 }
@@ -499,7 +500,7 @@ int mesh_ladder_calc(const mesh *objectsMesh, const lader *objectsLader, int num
     fencing_mesh = mesh_length*mesh_width;
     result = ceil(fencing_area/fencing_mesh);
     if (result > 0) return result;
-    else return 1;
+    else return -1;
 }
 
 int save_to_file(char* filename, lader *objectsLader, int numLader, mesh *objectsMesh, int numMesh, double *result_rods, int numResultRods, int *result_mesh, int numResultMesh)
@@ -517,7 +518,7 @@ int save_to_file(char* filename, lader *objectsLader, int numLader, mesh *object
         return 1;
     }
     fprintf(file, "Данные с прутьями\n\n");
-    for (int i = 0; i < numLader; i++) {
+    for (int i = 0; i < numResultRods; i++) {
         fprintf(file, "\nДанные %d:\n\n", i + 1);
         fprintf(file, "Высота ограждения: %.2lf\n", objectsLader[i].fenceLength);
         fprintf(file, "Высота ступеньки: %.2lf\n", objectsLader[i].stepHeight);
@@ -530,7 +531,7 @@ int save_to_file(char* filename, lader *objectsLader, int numLader, mesh *object
     fprintf(file, "~~~~~~~~~~~~~~~~~~~~~~~~~\n\n");
 
     fprintf(file, "Данные с сетками\n\n");
-    for (int i = 0; i < numMesh; i++)
+    for (int i = 0; i < numResultMesh; i++)
     {
         fprintf(file, "Данные %d:\n\n", i+1);
         fprintf(file, "Высота ступеньки: %.2lf\n", objectsLader[i].stepHeight);
